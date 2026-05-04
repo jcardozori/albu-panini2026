@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Álbum Panini FWC 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  .phone-frame {
+    width: 390px;
+    height: 844px;
+    background: #1a1a2e;
+    border-radius: 48px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 0 2px #333;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .screen { display: none; flex-direction: column; height: 100%; }
+  .screen.active { display: flex; }
+
+  /* ── LOGIN ── */
+  #login {
+    background: #1a1a2e;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bg-circle1 {
+    position: absolute; top: -80px; right: -80px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: #16213e; opacity: .8;
+  }
+  .bg-circle2 {
+    position: absolute; bottom: -60px; left: -60px;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: #0f3460; opacity: .6;
+  }
+  .card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 36px;
+    width: 100%;
+    max-width: 340px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    position: relative; z-index: 1;
+  }
+  .logo-circle {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: #1a1a2e;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px; margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(66,133,244,.35);
+  }
+  .app-name { font-size: 26px; font-weight: 800; color: #1a1a2e; }
+  .app-subtitle { font-size: 15px; color: #4285F4; font-weight: 700; letter-spacing: 2px; margin-top: 2px; }
+  .divider { width: 40px; height: 3px; background: #4285F4; border-radius: 2px; margin: 20px 0; }
+  .welcome { font-size: 17px; font-weight: 600; color: #1a1a2e; margin-bottom: 8px; text-align: center; }
+  .desc { font-size: 13px; color: #6b7280; text-align: center; line-height: 20px; margin-bottom: 28px; }
+  .google-btn {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    background: #fff; border: 2px solid #e5e7eb; border-radius: 12px;
+    padding: 14px 24px; width: 100%; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(66,133,244,.12);
+    transition: box-shadow .2s, transform .1s;
+    font-size: 16px; font-weight: 600; color: #374151;
+  }
+  .google-btn:hover { box-shadow: 0 4px 16px rgba(66,133,244,.25); transform: translateY(-1px); }
+  .google-btn:active { transform: translateY(0); }
+  .g-icon {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #4285F4; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; flex-shrink: 0;
+  }
+  .legal { font-size: 11px; color: #9ca3af; margin-top: 16px; text-align: center; }
+  .legal a { color: #4285F4; text-decoration: none; }
+  .footer-text { color: #4b5563; font-size: 12px; margin-top: 32px; position: relative; z-index: 1; }
+
+  /* ── HOME ── */
+  #home { background: #1a1a2e; }
+  .header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px;
+    background: #16213e;
+    border-bottom: 1px solid #0f3460;
+    flex-shrink: 0;
+  }
+  .header-title { font-size: 22px; font-weight: 800; color: #fff; }
+  .header-subtitle { font-size: 12px; color: #4285F4; font-weight: 600; letter-spacing: 1.5px; }
+  .menu-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #0f3460; border: none; cursor: pointer;
+    color: #fff; font-size: 22px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .global-progress {
+    background: #16213e;
+    padding: 12px 20px 14px;
+    flex-shrink: 0;
+  }
+  .gp-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .gp-label { color: #9ca3af; font-size: 13px; }
+  .gp-pct { color: #4285F4; font-size: 13px; font-weight: 700; }
+  .gp-bar-bg { height: 6px; background: #0f3460; border-radius: 3px; overflow: hidden; }
+  .gp-bar-fill { height: 100%; background: #34A853; border-radius: 3px; transition: width .4s; }
+  .gp-detail { color: #6b7280; font-size: 11px; margin-top: 4px; }
+  .sections-list {
+    flex: 1; overflow-y: auto; padding: 12px 14px;
+    scrollbar-width: thin; scrollbar-color: #334155 transparent;
+  }
+  .section-row {
+    display: flex; align-items: center;
+    border-radius: 12px; margin-bottom: 8px;
+    overflow: hidden; cursor: pointer;
+    border: 1px solid #334155; background: #1e293b;
+    transition: opacity .15s;
+  }
+  .section-row:hover { opacity: .85; }
+  .section-row.complete { background: #0d2818; border-color: #34A853; }
+  .color-bar { width: 6px; min-height: 60px; background: #e5e7eb; flex-shrink: 0; }
+  .section-row.complete .color-bar { background: #34A853; }
+  .section-info { flex: 1; padding: 14px 14px; }
+  .section-title { font-size: 14px; font-weight: 600; color: #e2e8f0; margin-bottom: 4px; }
+  .section-row.complete .section-title { color: #4ade80; }
+  .section-prog { font-size: 12px; color: #64748b; }
+  .prog-bar-wrap { width: 60px; height: 4px; background: #334155; border-radius: 2px; overflow: hidden; margin-right: 8px; flex-shrink: 0; }
+  .prog-bar { height: 100%; background: #4285F4; border-radius: 2px; transition: width .3s; }
+  .section-row.complete .prog-bar { background: #34A853; }
+  .arrow { font-size: 18px; color: #64748b; padding-right: 12px; font-weight: 700; }
+
+  /* ── STICKER PAGE ── */
+  #stickers { background: #1a1a2e; }
+  .sp-header {
+    display: flex; align-items: center;
+    padding: 12px; background: #16213e;
+    border-bottom: 1px solid #0f3460;
+    flex-shrink: 0; gap: 8px;
+  }
+  .back-btn {
+    display: flex; align-items: center; gap: 2px;
+    background: none; border: none; cursor: pointer; min-width: 70px;
+  }
+  .back-icon { font-size: 28px; color: #4285F4; font-weight: 300; line-height: 1; }
+  .back-txt { font-size: 15px; color: #4285F4; font-weight: 600; }
+  .sp-title-wrap { flex: 1; text-align: center; }
+  .sp-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .save-btn {
+    background: #4285F4; border: none; border-radius: 8px;
+    padding: 7px 14px; color: #fff; font-weight: 700; font-size: 13px;
+    cursor: pointer; min-width: 70px;
+    transition: background .2s;
+  }
+  .save-btn:disabled { background: #334155; cursor: default; }
+  .save-btn.has-changes { background: #4285F4; }
+  .stats-bar {
+    display: flex; background: #0f3460;
+    padding: 12px 16px; gap: 8px; align-items: center;
+    flex-shrink: 0;
+  }
+  .stats-bar.complete { background: #0d2818; }
+  .stat-item { flex: 1; text-align: center; }
+  .stat-num { font-size: 22px; font-weight: 800; color: #fff; }
+  .stat-pct { color: #4285F4; }
+  .stat-label { font-size: 10px; color: #64748b; margin-top: 2px; }
+  .complete-badge {
+    background: #34A853; border-radius: 8px;
+    padding: 5px 10px; font-size: 12px; font-weight: 800; color: #fff;
+    white-space: nowrap;
+  }
+  .instr-bar {
+    padding: 8px 16px; background: #1e293b;
+    border-bottom: 1px solid #334155;
+    font-size: 12px; color: #94a3b8; text-align: center;
+    flex-shrink: 0;
+  }
+  .instr-bar span.green { color: #34A853; font-weight: 600; }
+  .instr-bar span.gray { color: #94a3b8; font-weight: 600; }
+  .stickers-scroll { flex: 1; overflow-y: auto; padding: 16px; scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+  .stickers-grid { display: flex; flex-direction: column; gap: 10px; }
+  .sticker-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .sticker-box {
+    width: 58px; height: 70px; border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 2px solid #334155; background: #1e293b;
+    cursor: pointer; transition: all .15s; user-select: none;
+  }
+  .sticker-box:hover { opacity: .8; }
+  .sticker-box.filled { background: #0d4a1f; border-color: #34A853; box-shadow: 0 0 10px rgba(52,168,83,.25); }
+  .sticker-lbl { font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 2px; }
+  .sticker-box.filled .sticker-lbl { color: #4ade80; }
+  .sticker-check { font-size: 16px; color: #34A853; font-weight: 800; }
+  .quick-actions { display: flex; gap: 12px; margin-top: 24px; margin-bottom: 8px; }
+  .qa-btn {
+    flex: 1; background: #0d4a1f; border: 1px solid #34A853;
+    border-radius: 10px; padding: 12px; text-align: center;
+    cursor: pointer; color: #4ade80; font-size: 13px; font-weight: 700;
+    transition: opacity .15s;
+  }
+  .qa-btn:hover { opacity: .8; }
+  .qa-clear { background: #2d1515; border-color: #f87171; color: #f87171; }
+  .changes-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #854d0e; padding: 10px 16px;
+    flex-shrink: 0;
+  }
+  .changes-bar span { color: #fef3c7; font-size: 13px; }
+  .changes-bar button {
+    background: none; border: none; color: #fbbf24;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+  }
+  .hidden { display: none !important; }
+
+  /* ── MENU MODAL ── */
+  .modal-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 100; display: none;
+    justify-content: flex-end;
+    padding-top: 72px; padding-right: 14px;
+  }
+  .modal-overlay.open { display: flex; }
+  .menu-modal {
+    background: #1e293b; border-radius: 16px;
+    width: 240px; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+    align-self: flex-start;
+  }
+  .menu-user { padding: 16px; background: #16213e; }
+  .menu-user-name { color: #fff; font-size: 15px; font-weight: 700; }
+  .menu-user-email { color: #64748b; font-size: 13px; margin-top: 2px; }
+  .menu-divider { height: 1px; background: #334155; }
+  .menu-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px; cursor: pointer; background: none; border: none;
+    width: 100%; text-align: left;
+  }
+  .menu-item:hover { background: rgba(255,255,255,.05); }
+  .menu-item-icon { font-size: 18px; }
+  .menu-item-txt { color: #e2e8f0; font-size: 15px; font-weight: 500; }
+  .menu-item.danger { border-top: 1px solid #334155; }
+  .menu-item.danger .menu-item-txt { color: #f87171; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+
+  <!-- LOGIN -->
+  <div id="login" class="screen active">
+    <div class="bg-circle1"></div>
+    <div class="bg-circle2"></div>
+    <div class="card">
+      <div class="logo-circle">⚽</div>
+      <div class="app-name">Álbum Panini</div>
+      <div class="app-subtitle">FWC 2026</div>
+      <div class="divider"></div>
+      <div class="welcome">Inicia sesión para continuar</div>
+      <div class="desc">Gestiona tus fichas del álbum del Mundial 2026 y sincroniza tu progreso con Google Sheets.</div>
+      <button class="google-btn" onclick="goHome()">
+        <div class="g-icon">G</div>
+        Continuar con Google
+      </button>
+      <div class="legal">Al continuar, aceptas los <a href="#">Términos de Servicio</a></div>
+    </div>
+    <div class="footer-text">Panini FWC 2026 · Tracker</div>
+  </div>
+
+  <!-- HOME -->
+  <div id="home" class="screen">
+    <div class="header">
+      <div>
+        <div class="header-title">⚽ Álbum Panini</div>
+        <div class="header-subtitle">FWC 2026</div>
+      </div>
+      <button class="menu-btn" onclick="openMenu()">⋮</button>
+    </div>
+    <div class="global-progress">
+      <div class="gp-header">
+        <span class="gp-label">Progreso total</span>
+        <span class="gp-pct" id="gp-pct">0%</span>
+      </div>
+      <div class="gp-bar-bg"><div class="gp-bar-fill" id="gp-bar" style="width:0%"></div></div>
+      <div class="gp-detail" id="gp-detail">0 de 967 fichas completadas</div>
+    </div>
+    <div class="sections-list" id="sections-list"></div>
+
+    <!-- Menu modal -->
+    <div class="modal-overlay" id="menu-modal" onclick="closeMenu(event)">
+      <div class="menu-modal">
+        <div class="menu-user">
+          <div class="menu-user-name">Usuario Demo</div>
+          <div class="menu-user-email">demo@gmail.com</div>
+        </div>
+        <div class="menu-divider"></div>
+        <button class="menu-item" onclick="closeMenu()">
+          <span class="menu-item-icon">📊</span>
+          <span class="menu-item-txt">Exportar a Google Sheets</span>
+        </button>
+        <button class="menu-item danger" onclick="goLogin()">
+          <span class="menu-item-icon">🚪</span>
+          <span class="menu-item-txt">Cerrar sesión</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKER PAGE -->
+  <div id="stickers" class="screen">
+    <div class="sp-header">
+      <button class="back-btn" onclick="goBack()">
+        <span class="back-icon">‹</span>
+        <span class="back-txt">Volver</span>
+      </button>
+      <div class="sp-title-wrap">
+        <div class="sp-title" id="sp-title"></div>
+      </div>
+      <button class="save-btn" id="save-btn" disabled onclick="saveSection()">Guardar</button>
+    </div>
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num" id="st-found">0</div>
+        <div class="stat-label">Encontradas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="st-missing">0</div>
+        <div class="stat-label">Faltantes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num stat-pct" id="st-pct">0%</div>
+        <div class="stat-label">Completado</div>
+      </div>
+      <div class="complete-badge hidden" id="complete-badge">¡COMPLETO! 🎉</div>
+    </div>
+    <div class="instr-bar">
+      Toca cada ficha para marcarla como <span class="green">encontrada</span> o <span class="gray">pendiente</span>
+    </div>
+    <div class="stickers-scroll">
+      <div class="stickers-grid" id="stickers-grid"></div>
+      <div class="quick-actions">
+        <button class="qa-btn" onclick="markAll()">✓ Marcar todas</button>
+        <button class="qa-btn qa-clear" onclick="clearAll()">✕ Limpiar todas</button>
+      </div>
+    </div>
+    <div class="changes-bar hidden" id="changes-bar">
+      <span>⚠ Tienes cambios sin guardar</span>
+      <button onclick="saveSection()">Guardar ahora</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SECTIONS = [
+  { id: 'fwc_1_8',            title: 'FWC 1-8',                        total: 8,  start: 1  },
+  { id: 'grupo_a_mexico',     title: 'Grupo A, México',                 total: 20 },
+  { id: 'grupo_a_sudafrica',  title: 'Grupo A, Sudáfrica',              total: 20 },
+  { id: 'grupo_a_corea',      title: 'Grupo A, Corea del Sur',          total: 20 },
+  { id: 'grupo_a_rep_checa',  title: 'Grupo A, República Checa',        total: 20 },
+  { id: 'grupo_b_canada',     title: 'Grupo B, Canadá',                 total: 20 },
+  { id: 'grupo_b_bosnia',     title: 'Grupo B, Bosnia y Herzegovina',   total: 20 },
+  { id: 'grupo_b_qatar',      title: 'Grupo B, Qatar',                  total: 20 },
+  { id: 'grupo_b_suiza',      title: 'Grupo B, Suiza',                  total: 20 },
+  { id: 'grupo_c_brasil',     title: 'Grupo C, Brasil',                 total: 20 },
+  { id: 'grupo_c_marruecos',  title: 'Grupo C, Marruecos',              total: 20 },
+  { id: 'grupo_c_haiti',      title: 'Grupo C, Haití',                  total: 20 },
+  { id: 'grupo_c_escocia',    title: 'Grupo C, Escocia',                total: 20 },
+  { id: 'grupo_d_eeuu',       title: 'Grupo D, Estados Unidos',         total: 20 },
+  { id: 'grupo_d_paraguay',   title: 'Grupo D, Paraguay',               total: 20 },
+  { id: 'grupo_d_australia',  title: 'Grupo D, Australia',              total: 20 },
+  { id: 'grupo_d_turquia',    title: 'Grupo D, Turquía',                total: 20 },
+  { id: 'grupo_e_alemania',   title: 'Grupo E, Alemania',               total: 20 },
+  { id: 'grupo_e_curazao',    title: 'Grupo E, Curazao',                total: 20 },
+  { id: 'grupo_e_costa_marfil',title:'Grupo E, Costa de Marfil',        total: 20 },
+  { id: 'grupo_e_ecuador',    title: 'Grupo E, Ecuador',                total: 20 },
+  { id: 'grupo_f_paises_bajos',title:'Grupo F, Países Bajos',           total: 20 },
+  { id: 'grupo_f_japon',      title: 'Grupo F, Japón',                  total: 20 },
+  { id: 'grupo_f_suecia',     title: 'Grupo F, Suecia',                 total: 20 },
+  { id: 'grupo_f_tunez',      title: 'Grupo F, Túnez',                  total: 20 },
+  { id: 'grupo_g_belgica',    title: 'Grupo G, Bélgica',                total: 20 },
+  { id: 'grupo_g_egipto',     title: 'Grupo G, Egipto',                 total: 20 },
+  { id: 'grupo_g_iran',       title: 'Grupo G, Irán',                   total: 20 },
+  { id: 'grupo_g_nueva_zelanda',title:'Grupo G, Nueva Zelanda',         total: 20 },
+  { id: 'grupo_h_espana',     title: 'Grupo H, España',                 total: 20 },
+  { id: 'grupo_h_cabo_verde', title: 'Grupo H, Cabo Verde',             total: 20 },
+  { id: 'grupo_h_arabia',     title: 'Grupo H, Arabia Saudita',         total: 20 },
+  { id: 'grupo_h_uruguay',    title: 'Grupo H, Uruguay',                total: 20 },
+  { id: 'grupo_i_francia',    title: 'Grupo I, Francia',                total: 20 },
+  { id: 'grupo_i_senegal',    title: 'Grupo I, Senegal',                total: 20 },
+  { id: 'grupo_i_irak',       title: 'Grupo I, Irak',                   total: 20 },
+  { id: 'grupo_i_noruega',    title: 'Grupo I, Noruega',                total: 20 },
+  { id: 'grupo_j_argentina',  title: 'Grupo J, Argentina',              total: 20 },
+  { id: 'grupo_j_argelia',    title: 'Grupo J, Argelia',                total: 20 },
+  { id: 'grupo_j_austria',    title: 'Grupo J, Austria',                total: 20 },
+  { id: 'grupo_j_jordania',   title: 'Grupo J, Jordania',               total: 20 },
+  { id: 'grupo_k_portugal',   title: 'Grupo K, Portugal',               total: 20 },
+  { id: 'grupo_k_rd_congo',   title: 'Grupo K, RD Congo',               total: 20 },
+  { id: 'grupo_k_uzbekistan', title: 'Grupo K, Uzbekistán',             total: 20 },
+  { id: 'grupo_k_colombia',   title: 'Grupo K, Colombia',               total: 20 },
+  { id: 'grupo_l_inglaterra', title: 'Grupo L, Inglaterra',             total: 20 },
+  { id: 'grupo_l_croacia',    title: 'Grupo L, Croacia',                total: 20 },
+  { id: 'grupo_l_ghana',      title: 'Grupo L, Ghana',                  total: 20 },
+  { id: 'grupo_l_panama',     title: 'Grupo L, Panamá',                 total: 20 },
+  { id: 'fwc_9_19',           title: 'FWC 9-19',                        total: 11, start: 9  },
+  { id: 'fichas_cocacola',    title: 'Fichas CocaCola CC1-CC14',        total: 14, start: 1, prefix: 'CC' },
+];
+
+// Estado global: { sectionId: { 0: bool, 1: bool, ... } }
+let state = {};
+let currentSection = null;
+let hasChanges = false;
+
+// Inicializar estado vacío
+SECTIONS.forEach(s => {
+  state[s.id] = {};
+  for (let i = 0; i < s.total; i++) state[s.id][i] = false;
+});
+
+function stickerLabel(section, index) {
+  if (section.prefix) return `${section.prefix}${section.start + index}`;
+  if (section.start !== undefined) return `${section.start + index}`;
+  return `${index + 1}`;
+}
+
+function getTotals() {
+  const total = SECTIONS.reduce((a, s) => a + s.total, 0);
+  const filled = SECTIONS.reduce((a, s) => a + Object.values(state[s.id]).filter(Boolean).length, 0);
+  return { total, filled };
+}
+
+function updateGlobalProgress() {
+  const { total, filled } = getTotals();
+  const pct = total > 0 ? Math.round((filled / total) * 100) : 0;
+  document.getElementById('gp-pct').textContent = `${pct}%`;
+  document.getElementById('gp-bar').style.width = `${pct}%`;
+  document.getElementById('gp-detail').textContent = `${filled} de ${total} fichas completadas`;
+}
+
+function renderSections() {
+  const list = document.getElementById('sections-list');
+  list.innerHTML = '';
+  SECTIONS.forEach(s => {
+    const filled = Object.values(state[s.id]).filter(Boolean).length;
+    const total = s.total;
+    const pct = total > 0 ? (filled / total) * 100 : 0;
+    const complete = filled === total;
+
+    const row = document.createElement('div');
+    row.className = `section-row${complete ? ' complete' : ''}`;
+    row.innerHTML = `
+      <div class="color-bar"></div>
+      <div class="section-info">
+        <div class="section-title">${s.title}</div>
+        <div class="section-prog">${filled}/${total} fichas</div>
+      </div>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
+      <div class="arrow">${complete ? '✅' : '›'}</div>
+    `;
+    row.addEventListener('click', () => openSection(s));
+    list.appendChild(row);
+  });
+}
+
+function openSection(section) {
+  currentSection = section;
+  hasChanges = false;
+  document.getElementById('sp-title').textContent = section.title;
+  renderStickers();
+  updateStats();
+  showScreen('stickers');
+}
+
+function renderStickers() {
+  const grid = document.getElementById('stickers-grid');
+  grid.innerHTML = '';
+  const PER_ROW = 5;
+  for (let i = 0; i < currentSection.total; i += PER_ROW) {
+    const row = document.createElement('div');
+    row.className = 'sticker-row';
+    for (let j = i; j < Math.min(i + PER_ROW, currentSection.total); j++) {
+      const filled = state[currentSection.id][j];
+      const box = document.createElement('div');
+      box.className = `sticker-box${filled ? ' filled' : ''}`;
+      box.dataset.idx = j;
+      box.innerHTML = `<div class="sticker-lbl">${stickerLabel(currentSection, j)}</div>${filled ? '<div class="sticker-check">✓</div>' : ''}`;
+      box.addEventListener('click', () => toggleSticker(j));
+      row.appendChild(box);
+    }
+    grid.appendChild(row);
+  }
+}
+
+function toggleSticker(index) {
+  state[currentSection.id][index] = !state[currentSection.id][index];
+  hasChanges = true;
+  const box = document.querySelector(`.sticker-box[data-idx="${index}"]`);
+  if (box) {
+    const filled = state[currentSection.id][index];
+    box.className = `sticker-box${filled ? ' filled' : ''}`;
+    box.innerHTML = `<div class="sticker-lbl">${stickerLabel(currentSection, index)}</div>${filled ? '<div class="sticker-check">✓</div>' : ''}`;
+  }
+  updateStats();
+}
+
+function updateStats() {
+  const s = currentSection;
+  const filled = Object.values(state[s.id]).filter(Boolean).length;
+  const total = s.total;
+  const pct = Math.round((filled / total) * 100);
+  const complete = filled === total;
+
+  document.getElementById('st-found').textContent = filled;
+  document.getElementById('st-missing').textContent = total - filled;
+  document.getElementById('st-pct').textContent = `${pct}%`;
+
+  const statsBar = document.getElementById('stats-bar');
+  statsBar.className = `stats-bar${complete ? ' complete' : ''}`;
+  document.getElementById('complete-badge').classList.toggle('hidden', !complete);
+
+  const saveBtn = document.getElementById('save-btn');
+  saveBtn.disabled = !hasChanges;
+  saveBtn.className = `save-btn${hasChanges ? ' has-changes' : ''}`;
+
+  document.getElementById('changes-bar').classList.toggle('hidden', !hasChanges);
+}
+
+function markAll() {
+  if (!confirm('¿Marcar todas las fichas como encontradas?')) return;
+  for (let i = 0; i < currentSection.total; i++) state[currentSection.id][i] = true;
+  hasChanges = true;
+  renderStickers();
+  updateStats();
+}
+
+function clearAll() {
+  if (!confirm('¿Marcar todas las fichas como vacías?')) return;
+  for (let i = 0; i < currentSection.total; i++) state[currentSection.id][i] = false;
+  hasChanges = true;
+  renderStickers();
+  updateStats();
+}
+
+function saveSection() {
+  hasChanges = false;
+  document.getElementById('save-btn').disabled = true;
+  document.getElementById('changes-bar').classList.add('hidden');
+  updateGlobalProgress();
+  renderSections();
+}
+
+function goBack() {
+  if (hasChanges) {
+    if (confirm('¿Guardar los cambios antes de regresar?')) saveSection();
+  }
+  showScreen('home');
+}
+
+function goHome() {
+  updateGlobalProgress();
+  renderSections();
+  showScreen('home');
+}
+
+function goLogin() {
+  closeMenu();
+  showScreen('login');
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function openMenu() { document.getElementById('menu-modal').classList.add('open'); }
+function closeMenu(e) {
+  if (!e || e.target === document.getElementById('menu-modal')) {
+    document.getElementById('menu-modal').classList.remove('open');
+  }
+}
+</script>
+</body>
+</html>
