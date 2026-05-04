@@ -23,7 +23,7 @@ import {
 } from '../services/googleSheetsService';
 
 export default function HomeScreen({ navigation }) {
-  const { user, accessToken, signOut } = useAuth();
+  const { user, accessToken, signOut, refreshToken } = useAuth();
   const [allStates, setAllStates] = useState({});
   const [spreadsheetId, setSpreadsheetId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,9 +39,9 @@ export default function HomeScreen({ navigation }) {
   const initializeData = async () => {
     setLoading(true);
     try {
-      const sheetId = await getOrCreateSpreadsheet(accessToken);
+      const sheetId = await getOrCreateSpreadsheet(accessToken, refreshToken);
       setSpreadsheetId(sheetId);
-      const data = await loadDataFromSheets(sheetId, accessToken);
+      const data = await loadDataFromSheets(sheetId, accessToken, refreshToken);
 
       if (data) {
         setAllStates(data);
@@ -69,7 +69,7 @@ export default function HomeScreen({ navigation }) {
       const updated = { ...prev, [sectionId]: newStickerState };
       // Auto-guardar en background
       if (spreadsheetId) {
-        saveDataToSheets(spreadsheetId, accessToken, updated, SECTIONS).catch(console.error);
+        saveDataToSheets(spreadsheetId, accessToken, updated, SECTIONS, refreshToken).catch(console.error);
       }
       return updated;
     });
@@ -79,7 +79,7 @@ export default function HomeScreen({ navigation }) {
     setMenuVisible(false);
     setExporting(true);
     try {
-      const result = await exportToCustomSheet(accessToken, allStates, SECTIONS);
+      const result = await exportToCustomSheet(accessToken, allStates, SECTIONS, refreshToken);
       if (result) {
         Alert.alert(
           'Exportación exitosa',

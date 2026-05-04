@@ -87,6 +87,18 @@
     display: flex; align-items: center; justify-content: center;
     font-weight: 800; font-size: 14px; flex-shrink: 0;
   }
+  .apple-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: #000; border: none; border-radius: 12px;
+    padding: 14px 24px; width: 100%; cursor: pointer;
+    margin-top: 12px; font-size: 16px; font-weight: 600; color: #fff;
+    transition: opacity .2s;
+  }
+  .apple-btn:hover { opacity: .85; }
+  .apple-icon {
+    width: 18px; height: 22px; display: inline-block;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 814 1000'%3E%3Cpath fill='white' d='M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 376.1 0 228.7 0 155.1c0-109.4 65-167.3 129.5-167.3 60.3 0 101.7 44.2 147.5 44.2 44.5 0 92.8-46.6 162.9-46.6 60.9 0 122.7 22.4 167 77.6zm-325.9-58.6c-6.1-35.1 4.5-70.5 25.6-97.4 22.2-28.1 61.8-48.8 95.9-48.8 4.5 36.4-8.8 71.5-30.8 97.9-22 26.4-60.4 47.7-90.7 48.3z'/%3E%3C/svg%3E") no-repeat center/contain;
+  }
   .legal { font-size: 11px; color: #9ca3af; margin-top: 16px; text-align: center; }
   .legal a { color: #4285F4; text-decoration: none; }
   .footer-text { color: #4b5563; font-size: 12px; margin-top: 32px; position: relative; z-index: 1; }
@@ -274,7 +286,12 @@
         <div class="g-icon">G</div>
         Continuar con Google
       </button>
-      <div class="legal">Al continuar, aceptas los <a href="#">Términos de Servicio</a></div>
+      <!-- Botón Apple — solo visible en iOS; requerido por App Store Guideline 4.8 -->
+      <button class="apple-btn" onclick="goHome()">
+        <span class="apple-icon"></span>
+        Iniciar sesión con Apple
+      </button>
+      <div class="legal">Al continuar, aceptas los <a href="https://jcardozori.github.io/albu-panini2026/privacy" target="_blank">Términos de Servicio y Política de Privacidad</a></div>
     </div>
     <div class="footer-text">Panini FWC 2026 · Tracker</div>
   </div>

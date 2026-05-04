@@ -1,20 +1,19 @@
-// src/screens/LoginScreen.js
 import React, { useState } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image,
   ActivityIndicator,
   Alert,
   SafeAreaView,
   StatusBar,
+  Linking,
+  Platform,
 } from 'react-native';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { useAuth } from '../services/AuthContext';
 
-// Ícono SVG de Google representado como imagen inline
-// En producción usar react-native-svg
 function GoogleIcon() {
   return (
     <View style={styles.googleIconContainer}>
@@ -24,29 +23,38 @@ function GoogleIcon() {
 }
 
 export default function LoginScreen() {
-  const { signIn } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const { signIn, isAppleSignInAvailable } = useAuth();
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
+  const [loadingApple, setLoadingApple] = useState(false);
 
-  const handleLogin = async () => {
-    setLoading(true);
-    const result = await signIn();
-    setLoading(false);
+  const handleGoogleLogin = async () => {
+    setLoadingGoogle(true);
+    const result = await signIn('google');
+    setLoadingGoogle(false);
     if (!result.success) {
       Alert.alert('Error', result.error || 'No se pudo iniciar sesión');
     }
   };
 
+  const handleAppleLogin = async () => {
+    setLoadingApple(true);
+    const result = await signIn('apple');
+    setLoadingApple(false);
+    if (!result.success) {
+      Alert.alert('Error', result.error || 'No se pudo iniciar sesión con Apple');
+    }
+  };
+
+  const isLoading = loadingGoogle || loadingApple;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor="#1a1a2e" />
       <View style={styles.container}>
-        {/* Fondo decorativo */}
         <View style={styles.bgCircle1} />
         <View style={styles.bgCircle2} />
 
-        {/* Tarjeta principal */}
         <View style={styles.card}>
-          {/* Logo / Ícono del álbum */}
           <View style={styles.logoContainer}>
             <View style={styles.logoCircle}>
               <Text style={styles.logoEmoji}>⚽</Text>
@@ -63,14 +71,14 @@ export default function LoginScreen() {
             Gestiona tus fichas del álbum del Mundial 2026 y sincroniza tu progreso con Google Sheets.
           </Text>
 
-          {/* Botón de Google — único método de acceso */}
+          {/* Botón Google */}
           <TouchableOpacity
-            style={[styles.googleButton, loading && styles.googleButtonDisabled]}
-            onPress={handleLogin}
-            disabled={loading}
+            style={[styles.googleButton, isLoading && styles.buttonDisabled]}
+            onPress={handleGoogleLogin}
+            disabled={isLoading}
             activeOpacity={0.85}
           >
-            {loading ? (
+            {loadingGoogle ? (
               <ActivityIndicator size="small" color="#4285F4" />
             ) : (
               <>
@@ -80,9 +88,25 @@ export default function LoginScreen() {
             )}
           </TouchableOpacity>
 
+          {/* Botón Apple — solo en iOS, requerido por App Store Guideline 4.8 */}
+          {isAppleSignInAvailable && (
+            <AppleAuthentication.AppleAuthenticationButton
+              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+              buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+              cornerRadius={12}
+              style={[styles.appleButton, isLoading && styles.buttonDisabled]}
+              onPress={handleAppleLogin}
+            />
+          )}
+
           <Text style={styles.legalText}>
             Al continuar, aceptas los{' '}
-            <Text style={styles.legalLink}>Términos de Servicio</Text>
+            <Text
+              style={styles.legalLink}
+              onPress={() => Linking.openURL('https://jcardozori.github.io/albu-panini2026/privacy')}
+            >
+              Términos de Servicio y Política de Privacidad
+            </Text>
           </Text>
         </View>
 
@@ -207,7 +231,12 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
   },
-  googleButtonDisabled: {
+  appleButton: {
+    width: '100%',
+    height: 50,
+    marginTop: 12,
+  },
+  buttonDisabled: {
     opacity: 0.7,
   },
   googleIconContainer: {

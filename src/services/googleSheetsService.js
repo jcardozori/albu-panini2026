@@ -5,17 +5,32 @@ const SHEET_NAME = 'albu-panini2026';
 const EXPORT_SHEET_NAME = 'fichas';
 const SHEETS_API_BASE = 'https://sheets.googleapis.com/v4/spreadsheets';
 
+// Wrapper que reintenta una vez con token renovado si recibe 401
+async function fetchWithRefresh(url, options, refreshToken) {
+  let res = await fetch(url, options);
+  if (res.status === 401 && refreshToken) {
+    const newToken = await refreshToken();
+    if (newToken) {
+      const newOptions = {
+        ...options,
+        headers: { ...options.headers, Authorization: `Bearer ${newToken}` },
+      };
+      res = await fetch(url, newOptions);
+    }
+  }
+  return res;
+}
+
 /**
  * Obtiene o crea el spreadsheet "albu-panini2026" en el Drive del usuario autenticado.
  * Retorna el spreadsheetId.
  */
-export async function getOrCreateSpreadsheet(accessToken) {
+export async function getOrCreateSpreadsheet(accessToken, refreshToken) {
   // 1. Buscar si ya existe
-  const driveRes = await fetch(
+  const driveRes = await fetchWithRefresh(
     `https://www.googleapis.com/drive/v3/files?q=name%3D%27${SHEET_NAME}%27+and+mimeType%3D%27application%2Fvnd.google-apps.spreadsheet%27+and+trashed%3Dfalse&fields=files(id,name)`,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    }
+    { headers: { Authorization: `Bearer ${accessToken}` } },
+    refreshToken
   );
   const driveData = await driveRes.json();
 
@@ -61,13 +76,12 @@ export async function getOrCreateSpreadsheet(accessToken) {
  * Carga el estado de las fichas desde Google Sheets.
  * Retorna un objeto { [sectionId]: { [stickerIndex]: boolean } }
  */
-export async function loadDataFromSheets(spreadsheetId, accessToken) {
+export async function loadDataFromSheets(spreadsheetId, accessToken, refreshToken) {
   try {
-    const res = await fetch(
+    const res = await fetchWithRefresh(
       `${SHEETS_API_BASE}/${spreadsheetId}/values/Fichas!A1:ZZ1000`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+      refreshToken
     );
     const data = await res.json();
 
@@ -96,7 +110,7 @@ export async function loadDataFromSheets(spreadsheetId, accessToken) {
 /**
  * Guarda el estado completo de las fichas en Google Sheets.
  */
-export async function saveDataToSheets(spreadsheetId, accessToken, allStates, sections) {
+export async function saveDataToSheets(spreadsheetId, accessToken, allStates, sections, refreshToken) {
   try {
     // Construir matriz de datos
     const maxStickers = Math.max(...sections.map(s => s.totalStickers));
@@ -113,28 +127,20 @@ export async function saveDataToSheets(spreadsheetId, accessToken, allStates, se
     }
 
     // Limpiar hoja y escribir
-    await fetch(
+    await fetchWithRefresh(
       `${SHEETS_API_BASE}/${spreadsheetId}/values/Fichas!A1:ZZ1000:clear`,
-      {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
+      { method: 'POST', headers: { Authorization: `Bearer ${accessToken}` } },
+      refreshToken
     );
 
-    await fetch(
+    await fetchWithRefresh(
       `${SHEETS_API_BASE}/${spreadsheetId}/values/Fichas!A1?valueInputOption=RAW`,
       {
         method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          range: 'Fichas!A1',
-          majorDimension: 'ROWS',
-          values: rows,
-        }),
-      }
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ range: 'Fichas!A1', majorDimension: 'ROWS', values: rows }),
+      },
+      refreshToken
     );
 
     return true;
@@ -148,14 +154,13 @@ export async function saveDataToSheets(spreadsheetId, accessToken, allStates, se
  * Exporta los datos a un nuevo spreadsheet llamado "fichas".
  * Si ya existe, lo sobreescribe.
  */
-export async function exportToCustomSheet(accessToken, allStates, sections) {
+export async function exportToCustomSheet(accessToken, allStates, sections, refreshToken) {
   try {
     // Buscar si ya existe "fichas"
-    const driveRes = await fetch(
+    const driveRes = await fetchWithRefresh(
       `https://www.googleapis.com/drive/v3/files?q=name%3D%27${EXPORT_SHEET_NAME}%27+and+mimeType%3D%27application%2Fvnd.google-apps.spreadsheet%27+and+trashed%3Dfalse&fields=files(id,name)`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+      refreshToken
     );
     const driveData = await driveRes.json();
 
@@ -207,28 +212,20 @@ export async function exportToCustomSheet(accessToken, allStates, sections) {
     rows.push(['TOTAL', totalAll, filledAll, totalAll - filledAll, filledAll === totalAll ? 'COMPLETO ✓' : `${Math.round((filledAll / totalAll) * 100)}%`]);
 
     // Limpiar y escribir
-    await fetch(
+    await fetchWithRefresh(
       `${SHEETS_API_BASE}/${exportId}/values/Resumen!A1:Z1000:clear`,
-      {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
+      { method: 'POST', headers: { Authorization: `Bearer ${accessToken}` } },
+      refreshToken
     );
 
-    await fetch(
+    await fetchWithRefresh(
       `${SHEETS_API_BASE}/${exportId}/values/Resumen!A1?valueInputOption=RAW`,
       {
         method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          range: 'Resumen!A1',
-          majorDimension: 'ROWS',
-          values: rows,
-        }),
-      }
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ range: 'Resumen!A1', majorDimension: 'ROWS', values: rows }),
+      },
+      refreshToken
     );
 
     return {

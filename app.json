@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Álbum Panini FWC 2026",
+    "slug": "albu-panini2026",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a1a2e"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.jcardozori.albupanini2026",
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "NSUserTrackingUsageDescription": "Esta app no rastrea tu actividad publicitaria.",
+        "NSFaceIDUsageDescription": "Usamos Face ID para proteger tu sesión."
+      },
+      "privacyManifests": {
+        "NSPrivacyAccessedAPITypes": []
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1a1a2e"
+      },
+      "package": "com.jcardozori.albupanini2026",
+      "permissions": [
+        "android.permission.INTERNET"
+      ],
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      "expo-apple-authentication"
+    ],
+    "extra": {
+      "googleWebClientId": "TU_WEB_CLIENT_ID.apps.googleusercontent.com",
+      "privacyPolicyUrl": "https://jcardozori.github.io/albu-panini2026/privacy"
+    }
+  }
+}
