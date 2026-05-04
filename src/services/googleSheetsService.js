@@ -231,7 +231,10 @@ export async function exportToCustomSheet(accessToken, allStates, sections) {
       }
     );
 
-    return exportId;
+    return {
+      id: exportId,
+      url: `https://docs.google.com/spreadsheets/d/${exportId}`,
+    };
   } catch (e) {
     console.error('Error exportando:', e);
     return null;

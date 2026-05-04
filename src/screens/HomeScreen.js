@@ -11,6 +11,7 @@ import {
   Alert,
   ActivityIndicator,
   Modal,
+  Linking,
 } from 'react-native';
 import { useAuth } from '../services/AuthContext';
 import { SECTIONS, isSectionComplete } from '../data/stickers';
@@ -78,12 +79,15 @@ export default function HomeScreen({ navigation }) {
     setMenuVisible(false);
     setExporting(true);
     try {
-      const exportId = await exportToCustomSheet(accessToken, allStates, SECTIONS);
-      if (exportId) {
+      const result = await exportToCustomSheet(accessToken, allStates, SECTIONS);
+      if (result) {
         Alert.alert(
           'Exportación exitosa',
-          'El archivo "fichas" ha sido guardado/actualizado en tu Google Drive.',
-          [{ text: 'OK' }]
+          `El archivo fue guardado en tu Google Drive:\n\n📄 fichas\n📍 ${result.url}`,
+          [
+            { text: 'Cerrar' },
+            { text: 'Abrir en Drive', onPress: () => Linking.openURL(result.url) },
+          ]
         );
       } else {
         Alert.alert('Error', 'No se pudo exportar. Inténtalo de nuevo.');
