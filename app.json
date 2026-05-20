@@ -30,7 +30,8 @@
       },
       "package": "com.SiTechNi.AlbumPanini2026",
       "permissions": [
-        "android.permission.INTERNET"
+        "android.permission.INTERNET",
+        "com.google.android.gms.permission.AD_ID"
       ]
     },
     "web": {
