@@ -20,9 +20,9 @@ import {
 const TEST_BANNER_ID        = TestIds.ADAPTIVE_BANNER;
 const TEST_INTERSTITIAL_ID  = TestIds.INTERSTITIAL;
 
-// ─── IDs de producción — reemplaza con los tuyos de AdMob ────────────────────
-const PROD_BANNER_ID        = 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'; // TODO
-const PROD_INTERSTITIAL_ID  = 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'; // TODO
+// ─── IDs de producción ───────────────────────────────────────────────────────
+const PROD_BANNER_ID        = 'ca-app-pub-3711561005297489/4720625623';
+const PROD_INTERSTITIAL_ID  = 'ca-app-pub-3711561005297489/8524139262';
 
 // ─── Selección automática según entorno ──────────────────────────────────────
 const IS_PROD = !__DEV__;
