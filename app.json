@@ -28,11 +28,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1a1a2e"
       },
-      "package": "com.jcardozori.albupanini2026",
+      "package": "com.SiTechNi.AlbumPanini2026",
       "permissions": [
         "android.permission.INTERNET"
-      ],
-      "googleServicesFile": "./google-services.json"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -42,8 +41,11 @@
       "expo-apple-authentication"
     ],
     "extra": {
-      "googleWebClientId": "TU_WEB_CLIENT_ID.apps.googleusercontent.com",
-      "privacyPolicyUrl": "https://jcardozori.github.io/albu-panini2026/privacy"
+      "googleWebClientId": "1031869688954-5r392rimk6f7vt2lsm0sktlealiuceba.apps.googleusercontent.com",
+      "privacyPolicyUrl": "https://jcardozori.github.io/albu-panini2026/privacy",
+      "eas": {
+        "projectId": "037b2ae9-70ce-462c-954e-a6ecc393bb4d"
+      }
     }
   }
 }

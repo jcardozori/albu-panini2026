@@ -5,6 +5,19 @@ const SHEET_NAME = 'albu-panini2026';
 const EXPORT_SHEET_NAME = 'fichas';
 const SHEETS_API_BASE = 'https://sheets.googleapis.com/v4/spreadsheets';
 
+// Logger seguro: en producción solo muestra el mensaje, nunca el objeto de error completo
+// (evita filtrar tokens o datos sensibles en los logs del dispositivo)
+const __DEV__ = process.env.NODE_ENV !== 'production';
+function safeLog(message, error) {
+  if (__DEV__) {
+    console.error(message, error);
+  } else {
+    // En producción: solo el mensaje y el código de estado si existe, no el objeto entero
+    const safeDetail = error?.message ?? error?.status ?? '';
+    console.error(`[Sheets] ${message}${safeDetail ? ` — ${safeDetail}` : ''}`);
+  }
+}
+
 // Wrapper que reintenta una vez con token renovado si recibe 401
 async function fetchWithRefresh(url, options, refreshToken) {
   let res = await fetch(url, options);
@@ -102,7 +115,7 @@ export async function loadDataFromSheets(spreadsheetId, accessToken, refreshToke
     }
     return result;
   } catch (e) {
-    console.error('Error cargando desde Sheets:', e);
+    safeLog('Error cargando desde Sheets:', e);
     return null;
   }
 }
@@ -145,7 +158,7 @@ export async function saveDataToSheets(spreadsheetId, accessToken, allStates, se
 
     return true;
   } catch (e) {
-    console.error('Error guardando en Sheets:', e);
+    safeLog('Error guardando en Sheets:', e);
     return false;
   }
 }
@@ -233,7 +246,7 @@ export async function exportToCustomSheet(accessToken, allStates, sections, refr
       url: `https://docs.google.com/spreadsheets/d/${exportId}`,
     };
   } catch (e) {
-    console.error('Error exportando:', e);
+    safeLog('Error exportando:', e);
     return null;
   }
 }

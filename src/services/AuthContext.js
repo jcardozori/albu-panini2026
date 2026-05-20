@@ -3,12 +3,19 @@ import { Platform } from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Crypto from 'expo-crypto';
+import Constants from 'expo-constants';
 
 const AuthContext = createContext(null);
 
-// Reemplazar con el webClientId de Google Cloud Console
+// webClientId leído desde app.json → extra.googleWebClientId (nunca hardcodeado en código fuente)
+const WEB_CLIENT_ID = Constants.expoConfig?.extra?.googleWebClientId;
+
+if (!WEB_CLIENT_ID || WEB_CLIENT_ID.includes('TU_WEB_CLIENT_ID')) {
+  console.warn('[AuthContext] googleWebClientId no está configurado en app.json > extra');
+}
+
 GoogleSignin.configure({
-  webClientId: 'TU_WEB_CLIENT_ID.apps.googleusercontent.com',
+  webClientId: WEB_CLIENT_ID,
   offlineAccess: true,
   scopes: [
     'https://www.googleapis.com/auth/spreadsheets',
@@ -64,9 +71,14 @@ export function AuthProvider({ children }) {
   // Sign in with Apple — requerido por App Store (Guideline 4.8)
   const signInWithApple = async () => {
     try {
+      // Nonce criptográficamente seguro: 32 bytes aleatorios → hex → SHA-256
+      const rawBytes = await Crypto.getRandomBytesAsync(32);
+      const rawNonceHex = Array.from(rawBytes)
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
       const nonce = await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,
-        Math.random().toString(36).substring(2)
+        rawNonceHex
       );
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
@@ -110,7 +122,8 @@ export function AuthProvider({ children }) {
       setUser(null);
       setAccessToken(null);
     } catch (e) {
-      console.error('Error al cerrar sesión:', e);
+      // No loguear el objeto de error completo (puede contener tokens en desarrollo)
+      console.warn('[Auth] Error al cerrar sesión:', e?.message ?? 'error desconocido');
     }
   };
 
