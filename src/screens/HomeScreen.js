@@ -267,6 +267,22 @@ export default function HomeScreen({ navigation }) {
               </Text>
             </TouchableOpacity>
 
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => { setMenuVisible(false); Linking.openURL('https://jcardozori.github.io/albu-panini2026/terms'); }}
+            >
+              <Text style={styles.menuItemIcon}>📄</Text>
+              <Text style={styles.menuItemText}>Términos de Servicio</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => { setMenuVisible(false); Linking.openURL('https://jcardozori.github.io/albu-panini2026/privacy'); }}
+            >
+              <Text style={styles.menuItemIcon}>🔒</Text>
+              <Text style={styles.menuItemText}>Política de Privacidad</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity style={[styles.menuItem, styles.menuItemDanger]} onPress={handleSignOut}>
               <Text style={styles.menuItemIcon}>🚪</Text>
               <Text style={styles.menuItemTextDanger}>Cerrar sesión</Text>

@@ -103,9 +103,16 @@ export default function LoginScreen() {
             Al continuar, aceptas los{' '}
             <Text
               style={styles.legalLink}
+              onPress={() => Linking.openURL('https://jcardozori.github.io/albu-panini2026/terms')}
+            >
+              Términos de Servicio
+            </Text>
+            {' '}y la{' '}
+            <Text
+              style={styles.legalLink}
               onPress={() => Linking.openURL('https://jcardozori.github.io/albu-panini2026/privacy')}
             >
-              Términos de Servicio y Política de Privacidad
+              Política de Privacidad
             </Text>
           </Text>
         </View>
