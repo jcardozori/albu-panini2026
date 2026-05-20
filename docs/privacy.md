@@ -42,15 +42,22 @@ La aplicación ofrece inicio de sesión mediante **Google Sign-In** (Android e i
 
 El estado de la colección del usuario (figuritas obtenidas, repetidas o faltantes) se transmite y almacena en **Google Sheets dentro de la cuenta de Google del propio usuario**. SiTechNi no almacena estos datos en servidores propios. La sincronización ocurre únicamente cuando el usuario lo solicita de forma explícita.
 
-### 3.3 Datos NO recopilados
+### 3.3 Publicidad (Google AdMob)
 
-Esta aplicación **no recopila, no accede ni transmite**:
+La aplicación muestra anuncios a través de **Google AdMob** (Google LLC). AdMob puede utilizar el **identificador de publicidad del dispositivo** (AAID en Android, IDFA en iOS) para mostrar anuncios relevantes. Este proceso es gestionado íntegramente por Google bajo su propia política de privacidad. SiTechNi no accede ni almacena este identificador.
+
+El usuario puede limitar el uso del identificador de publicidad desde los ajustes del dispositivo:
+- **Android:** Ajustes → Google → Anuncios → Inhabilitar personalización de anuncios.
+- **iOS:** Ajustes → Privacidad → Seguimiento → desactivar para esta app.
+
+### 3.4 Datos NO recopilados por SiTechNi
+
+Esta aplicación **no recopila, no accede ni transmite a SiTechNi**:
 
 - Ubicación geográfica (precisa ni aproximada).
 - Datos biométricos (Face ID y Touch ID son gestionados exclusivamente por el sistema operativo del dispositivo; SiTechNi no accede a ellos).
 - Información bancaria, de tarjetas de crédito o débito.
 - Contactos, fotos de galería, micrófono ni cámara del dispositivo.
-- Identificadores de publicidad (AAID, IDFA) ni datos de comportamiento para publicidad.
 - Registros de llamadas, SMS ni mensajes.
 - Datos de salud o actividad física.
 - Identificadores persistentes de dispositivo (IMEI, Android ID).
@@ -132,6 +139,7 @@ Esta aplicación se integra con los siguientes servicios externos. Cada uno oper
 |---|---|---|---|
 | Google Sign-In | Google LLC | Email, nombre, foto de perfil | [policies.google.com/privacy](https://policies.google.com/privacy) |
 | Google Sheets API | Google LLC | Contenido de la hoja del álbum | [policies.google.com/privacy](https://policies.google.com/privacy) |
+| Google AdMob | Google LLC | Identificador de publicidad (AAID/IDFA) para segmentación de anuncios | [policies.google.com/privacy](https://policies.google.com/privacy) |
 | Sign in with Apple | Apple Inc. | Email anonimizado, nombre | [apple.com/legal/privacy](https://www.apple.com/legal/privacy/) |
 | Expo / EAS | Expo (650 Industries) | Puede recopilar datos de crash y uso anónimos | [expo.dev/privacy](https://expo.dev/privacy) |
 

@@ -1,5 +1,5 @@
 // src/screens/HomeScreen.js
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,11 @@ import {
   saveDataToSheets,
   exportToCustomSheet,
 } from '../services/googleSheetsService';
+import AdBanner from '../components/AdBanner';
+import { showInterstitial } from '../services/AdService';
+
+// Mostrar intersticial cada INTERSTITIAL_EVERY secciones que se abren
+const INTERSTITIAL_EVERY = 3;
 
 export default function HomeScreen({ navigation }) {
   const { user, accessToken, signOut, refreshToken } = useAuth();
@@ -30,6 +35,7 @@ export default function HomeScreen({ navigation }) {
   const [syncing, setSyncing] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+  const sectionOpenCount = useRef(0);
 
   // Cargar datos al iniciar
   useEffect(() => {
@@ -127,13 +133,22 @@ export default function HomeScreen({ navigation }) {
           styles.sectionRow,
           complete ? styles.sectionRowComplete : styles.sectionRowIncomplete,
         ]}
-        onPress={() =>
-          navigation.navigate('StickerPage', {
-            section,
-            initialState: allStates[section.id] || {},
-            onReturn: handleReturnFromSection,
-          })
-        }
+        onPress={() => {
+          sectionOpenCount.current += 1;
+          const navigateToSection = () =>
+            navigation.navigate('StickerPage', {
+              section,
+              initialState: allStates[section.id] || {},
+              onReturn: handleReturnFromSection,
+            });
+
+          // Mostrar intersticial cada INTERSTITIAL_EVERY secciones abiertas
+          if (sectionOpenCount.current % INTERSTITIAL_EVERY === 0) {
+            showInterstitial(navigateToSection);
+          } else {
+            navigateToSection();
+          }
+        }}
         activeOpacity={0.75}
       >
         {/* Indicador de color lateral */}
@@ -266,6 +281,9 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.syncingText}>Guardando...</Text>
         </View>
       )}
+
+      {/* Banner publicitario fijo al fondo */}
+      <AdBanner />
     </SafeAreaView>
   );
 }
@@ -358,6 +376,7 @@ const styles = StyleSheet.create({
   listContent: {
     padding: 16,
     gap: 8,
+    paddingBottom: 80, // espacio para el banner (~50px) + margen
   },
   sectionRow: {
     flexDirection: 'row',
