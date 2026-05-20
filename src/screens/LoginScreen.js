@@ -61,8 +61,8 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          <Text style={styles.appName}>Álbum Panini</Text>
-          <Text style={styles.appSubtitle}>FWC 2026</Text>
+          <Text style={styles.appName}>Laminas WC2026</Text>
+          <Text style={styles.appSubtitle}>FIFA World Cup</Text>
 
           <View style={styles.divider} />
 
@@ -110,7 +110,7 @@ export default function LoginScreen() {
           </Text>
         </View>
 
-        <Text style={styles.footerText}>Panini FWC 2026 · Tracker</Text>
+        <Text style={styles.footerText}>Laminas WC2026 · Tracker</Text>
       </View>
     </SafeAreaView>
   );

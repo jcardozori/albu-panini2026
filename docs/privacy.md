@@ -1,15 +1,15 @@
-# Política de Privacidad — Álbum Panini FWC 2026
+# Política de Privacidad — Laminas WC2026
 
 **Desarrollado por:** SiTechNi  
 **Última actualización:** 20 de mayo de 2026  
-**Aplicable a:** Álbum Panini FWC 2026 (Android e iOS)  
+**Aplicable a:** Laminas WC2026 (Android e iOS)  
 **URL de esta política:** https://jcardozori.github.io/albu-panini2026/privacy
 
 ---
 
 ## 1. Introducción
 
-SiTechNi ("nosotros", "nuestro") ha desarrollado la aplicación **Álbum Panini FWC 2026** como una herramienta de uso personal para el seguimiento y organización de colecciones de figuritas del Mundial de Fútbol 2026. Esta aplicación **no es un juego** ni contiene elementos de gamificación, apuestas, compras dentro de la app ni monetización de ningún tipo.
+SiTechNi ("nosotros", "nuestro") ha desarrollado la aplicación **Laminas WC2026** como una herramienta de uso personal para el seguimiento y organización de colecciones de figuritas del Mundial de Fútbol 2026. Esta aplicación **no es un juego** ni contiene elementos de gamificación, apuestas, compras dentro de la app ni monetización de ningún tipo.
 
 La presente Política de Privacidad describe de forma completa qué datos se utilizan, cómo se protegen, con quién se comparten y cuáles son los derechos del usuario. Esta política es **accesible desde la propia aplicación** (sección Ajustes → Política de Privacidad) y desde la ficha de Google Play.
 
@@ -111,9 +111,9 @@ Dado que esta aplicación utiliza autenticación de terceros (Google / Apple), *
 ### Desde la web (eliminación completa)
 Para una eliminación total de datos asociados:
 
-1. **Revocar el acceso de la app a Google:** Visita [myaccount.google.com/permissions](https://myaccount.google.com/permissions), busca "Álbum Panini FWC 2026" y retira el acceso.
+1. **Revocar el acceso de la app a Google:** Visita [myaccount.google.com/permissions](https://myaccount.google.com/permissions), busca "Laminas WC2026" y retira el acceso.
 2. **Eliminar los datos del álbum:** Accede a [drive.google.com](https://drive.google.com), localiza la hoja de cálculo creada por la app y elimínala.
-3. **Solicitud formal de eliminación:** Envía un correo a [soporte@sitechni.com](mailto:soporte@sitechni.com) con el asunto **"Eliminación de datos — Álbum Panini FWC 2026"** si requieres confirmación escrita. Responderemos en un plazo máximo de **30 días hábiles**.
+3. **Solicitud formal de eliminación:** Envía un correo a [soporte@sitechni.com](mailto:soporte@sitechni.com) con el asunto **"Eliminación de datos — Laminas WC2026"** si requieres confirmación escrita. Responderemos en un plazo máximo de **30 días hábiles**.
 
 ---
 
@@ -174,7 +174,7 @@ Para consultas, solicitudes de eliminación de datos o ejercicio de derechos rel
 
 **SiTechNi**  
 Correo electrónico: [soporte@sitechni.com](mailto:soporte@sitechni.com)  
-Solicitud de eliminación de cuenta: [soporte@sitechni.com](mailto:soporte@sitechni.com) — Asunto: "Eliminación de datos — Álbum Panini FWC 2026"
+Solicitud de eliminación de cuenta: [soporte@sitechni.com](mailto:soporte@sitechni.com) — Asunto: "Eliminación de datos — Laminas WC2026"
 
 Tiempo de respuesta máximo: **30 días hábiles**.
 

@@ -204,8 +204,8 @@ export default function HomeScreen({ navigation }) {
       {/* Header */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.headerTitle}>⚽ Álbum Panini</Text>
-          <Text style={styles.headerSubtitle}>FWC 2026</Text>
+          <Text style={styles.headerTitle}>Laminas WC2026</Text>
+          <Text style={styles.headerSubtitle}>FIFA World Cup</Text>
         </View>
         <TouchableOpacity onPress={() => setMenuVisible(true)} style={styles.menuButton}>
           <Text style={styles.menuIcon}>⋮</Text>

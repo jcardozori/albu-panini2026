@@ -1,7 +1,7 @@
 // src/services/googleSheetsService.js
 // Servicio para leer y escribir datos en Google Sheets usando la API de Google
 
-const SHEET_NAME = 'albu-panini2026';
+const SHEET_NAME = 'laminas-wc2026';
 const EXPORT_SHEET_NAME = 'fichas';
 const SHEETS_API_BASE = 'https://sheets.googleapis.com/v4/spreadsheets';
 
@@ -35,7 +35,7 @@ async function fetchWithRefresh(url, options, refreshToken) {
 }
 
 /**
- * Obtiene o crea el spreadsheet "albu-panini2026" en el Drive del usuario autenticado.
+ * Obtiene o crea el spreadsheet "laminas-wc2026" en el Drive del usuario autenticado.
  * Retorna el spreadsheetId.
  */
 export async function getOrCreateSpreadsheet(accessToken, refreshToken) {
@@ -200,7 +200,7 @@ export async function exportToCustomSheet(accessToken, allStates, sections, refr
 
     // Construir datos para exportar con resumen visual
     const rows = [
-      ['Álbum Panini FWC 2026 - Reporte de Fichas'],
+      ['Laminas WC2026 - Reporte de Fichas'],
       ['Generado:', new Date().toLocaleString('es-CO')],
       [],
       ['Sección', 'Total Fichas', 'Fichas Llenas', 'Fichas Vacías', 'Completado'],

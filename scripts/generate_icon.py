@@ -145,7 +145,7 @@ def make_icon(size, path, adaptive=False):
                      border_w=max(2, size//200))
 
     if not adaptive:
-        # ── Franja inferior con texto "FWC 2026" ──────────────────────────────
+        # ── Franja inferior con texto "WC 2026" ──────────────────────────────
         band_h = int(H * 0.175)
         band_y = H - band_h
         # Fondo semitransparente de la franja
@@ -167,7 +167,7 @@ def make_icon(size, path, adaptive=False):
             draw.point((lx, line_y), fill=(r_col, g_col, b_col))
             draw.point((lx, line_y+1), fill=(r_col, g_col, b_col))
 
-        # Texto "FWC 2026"
+        # Texto "WC 2026"
         try:
             from PIL import ImageFont
             try:
@@ -182,9 +182,9 @@ def make_icon(size, path, adaptive=False):
             f_small= ImageFont.load_default()
 
         text_cy = band_y + band_h // 2
-        draw.text((cx, text_cy - size//28), "FWC 2026",
+        draw.text((cx, text_cy - size//28), "WC 2026",
                   font=f_big, fill=WHITE, anchor="mm")
-        draw.text((cx, text_cy + size//16), "Album Panini",
+        draw.text((cx, text_cy + size//16), "Laminas WC2026",
                   font=f_small, fill=BLUE, anchor="mm")
 
     img.save(path, "PNG", optimize=True)

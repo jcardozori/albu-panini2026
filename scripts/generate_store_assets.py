@@ -110,8 +110,8 @@ def make_feature_graphic():
     draw_soccer_ball(draw, W//2, H//2+10, 92)
 
     # ── Título ───────────────────────────────────────────────────────────────
-    draw.text((W//2, 72), "ALBUM PANINI", font=font(68, bold=True), fill=WHITE, anchor="mm")
-    draw.text((W//2, 148), "FIFA WORLD CUP 2026", font=font(32, bold=True), fill=BLUE, anchor="mm")
+    draw.text((W//2, 72), "LAMINAS WC2026", font=font(68, bold=True), fill=WHITE, anchor="mm")
+    draw.text((W//2, 148), "FIFA WORLD CUP 2026 - Tracker", font=font(32, bold=True), fill=BLUE, anchor="mm")
 
     # ── Subtítulo ────────────────────────────────────────────────────────────
     draw.text((W//2, H - 90), "Colecciona · Organiza · Completa tu album", font=font(26), fill=GRAY, anchor="mm")
@@ -147,7 +147,7 @@ def make_screenshot_home():
     # ── Header ────────────────────────────────────────────────────────────────
     draw.rectangle([0, 60, W, 192], fill=BG2)
     draw.rectangle([0, 192, W, 196], fill=BG3)
-    draw.text((52, 88),  "Album Panini", font=font(60, bold=True), fill=WHITE)
+    draw.text((52, 88),  "Laminas WC2026", font=font(60, bold=True), fill=WHITE)
     draw.text((54, 158), "FWC 2026",     font=font(34, bold=True), fill=BLUE)
     # menú ⋮
     for dy in [0, 16, 32]:
