@@ -2,7 +2,8 @@
 
 **Desarrollado por:** SiTechNi  
 **Última actualización:** 20 de mayo de 2026  
-**Aplicable a:** Álbum Panini FWC 2026 (Android e iOS)
+**Aplicable a:** Álbum Panini FWC 2026 (Android e iOS)  
+**URL de esta política:** https://jcardozori.github.io/albu-panini2026/privacy
 
 ---
 
@@ -10,7 +11,7 @@
 
 SiTechNi ("nosotros", "nuestro") ha desarrollado la aplicación **Álbum Panini FWC 2026** como una herramienta de uso personal para el seguimiento y organización de colecciones de figuritas del Mundial de Fútbol 2026. Esta aplicación **no es un juego** ni contiene elementos de gamificación, apuestas, compras dentro de la app ni monetización de ningún tipo.
 
-La presente Política de Privacidad describe cómo se gestiona la información dentro de la aplicación y cuáles son los derechos y responsabilidades del usuario.
+La presente Política de Privacidad describe de forma completa qué datos se utilizan, cómo se protegen, con quién se comparten y cuáles son los derechos del usuario. Esta política es **accesible desde la propia aplicación** (sección Ajustes → Política de Privacidad) y desde la ficha de Google Play.
 
 Al instalar y utilizar esta aplicación, el usuario acepta los términos aquí descritos.
 
@@ -18,48 +19,98 @@ Al instalar y utilizar esta aplicación, el usuario acepta los términos aquí d
 
 ## 2. Edad mínima requerida
 
-Esta aplicación está destinada a usuarios **mayores de 13 años**. No recopilamos intencionalmente información de menores de 13 años. Si eres padre, madre o tutor legal y tienes conocimiento de que un menor a tu cargo ha proporcionado información personal a través de esta aplicación, contáctanos a través del correo indicado al final de este documento para que podamos tomar las medidas correspondientes.
+Esta aplicación está destinada a usuarios **mayores de 13 años**. No recopilamos intencionalmente información de menores de 13 años. Si eres padre, madre o tutor legal y tienes conocimiento de que un menor a tu cargo ha proporcionado información personal a través de esta aplicación, contáctanos a través del correo indicado en la sección 11 para que podamos eliminar dicha información de inmediato.
 
 ---
 
-## 3. Información que la aplicación utiliza
+## 3. Datos que la aplicación recopila y transmite
 
-### 3.1 Autenticación
-La aplicación ofrece inicio de sesión mediante **Google Sign-In** y, en dispositivos Apple, mediante **Sign in with Apple**. Este proceso es gestionado íntegramente por los proveedores (Google LLC y Apple Inc.) bajo sus propias políticas de privacidad. SiTechNi únicamente recibe el nombre de perfil, la dirección de correo electrónico y la foto de perfil pública que el usuario autoriza compartir.
+### 3.1 Datos recopilados mediante autenticación
 
-### 3.2 Datos del álbum
-El estado de la colección del usuario (figuritas marcadas como obtenidas, repetidas o faltantes) se almacena de forma opcional en **Google Sheets** a través de la cuenta de Google del propio usuario. SiTechNi **no almacena estos datos en servidores propios**.
+La aplicación ofrece inicio de sesión mediante **Google Sign-In** (Android e iOS) y, opcionalmente, **Sign in with Apple** (exclusivo iOS). Al autenticarse, SiTechNi recibe y almacena temporalmente en memoria del dispositivo los siguientes datos:
 
-### 3.3 Datos no recopilados
-Esta aplicación **no recopila**:
-- Información de ubicación geográfica.
-- Datos biométricos (salvo el uso de Face ID/Touch ID del dispositivo para autenticar la sesión, proceso gestionado exclusivamente por el sistema operativo).
-- Números de tarjetas de crédito, débito ni información bancaria.
-- Contactos, fotos, micrófono ni acceso a la cámara del dispositivo.
-- Identificadores de publicidad ni datos de comportamiento para fines publicitarios.
+| Dato | Origen | Finalidad |
+|---|---|---|
+| Nombre y apellido de perfil | Google / Apple | Mostrar nombre en la app |
+| Dirección de correo electrónico | Google / Apple | Identificar la sesión |
+| URL de foto de perfil pública | Google | Mostrar avatar en la app |
+| Token de acceso OAuth 2.0 | Google | Leer y escribir el Google Sheet del usuario |
 
----
+> **Importante:** El token de acceso OAuth **se almacena exclusivamente en memoria del dispositivo** durante la sesión activa. No se transmite a servidores de SiTechNi ni se persiste en disco. Al cerrar sesión, el token se revoca y se elimina.
 
-## 4. Uso de la información
+### 3.2 Datos del álbum (Google Sheets)
 
-La información de autenticación obtenida se utiliza exclusivamente para:
+El estado de la colección del usuario (figuritas obtenidas, repetidas o faltantes) se transmite y almacena en **Google Sheets dentro de la cuenta de Google del propio usuario**. SiTechNi no almacena estos datos en servidores propios. La sincronización ocurre únicamente cuando el usuario lo solicita de forma explícita.
 
-- Identificar al usuario dentro de la aplicación.
-- Permitir la sincronización de los datos del álbum con Google Sheets, cuando el usuario lo solicita expresamente.
+### 3.3 Datos NO recopilados
 
-SiTechNi **no vende, cede, alquila ni comercializa** ningún dato del usuario a terceros.
+Esta aplicación **no recopila, no accede ni transmite**:
 
----
-
-## 5. Almacenamiento y seguridad
-
-Los datos del álbum residen en la cuenta de Google del propio usuario (Google Sheets). SiTechNi **no controla ni puede acceder** a dicha cuenta. La seguridad, integridad y disponibilidad de esa información depende de las medidas de seguridad que el usuario aplique en su cuenta de Google (contraseña segura, verificación en dos pasos, etc.).
-
-> **Importante:** La seguridad de la información asociada a esta aplicación es **responsabilidad exclusiva del usuario**. SiTechNi no puede garantizar la protección de datos almacenados en servicios de terceros ni puede recuperar información eliminada por el usuario o por el proveedor del servicio.
+- Ubicación geográfica (precisa ni aproximada).
+- Datos biométricos (Face ID y Touch ID son gestionados exclusivamente por el sistema operativo del dispositivo; SiTechNi no accede a ellos).
+- Información bancaria, de tarjetas de crédito o débito.
+- Contactos, fotos de galería, micrófono ni cámara del dispositivo.
+- Identificadores de publicidad (AAID, IDFA) ni datos de comportamiento para publicidad.
+- Registros de llamadas, SMS ni mensajes.
+- Datos de salud o actividad física.
+- Identificadores persistentes de dispositivo (IMEI, Android ID).
+- Datos de uso o telemetría propios de SiTechNi.
 
 ---
 
-## 6. Limitación de responsabilidad
+## 4. Finalidad del uso de los datos
+
+Los datos recopilados se utilizan exclusivamente para:
+
+1. **Autenticación:** Identificar al usuario dentro de la aplicación durante la sesión activa.
+2. **Sincronización del álbum:** Leer y escribir la hoja de cálculo del álbum en Google Sheets, con el consentimiento explícito del usuario.
+
+SiTechNi **no vende, cede, alquila ni comercializa** ningún dato personal del usuario a terceros.
+
+---
+
+## 5. Medidas de seguridad implementadas por SiTechNi
+
+SiTechNi aplica las siguientes medidas técnicas para proteger los datos durante su uso:
+
+- **Cifrado en tránsito:** Todas las comunicaciones con Google Sheets API y los servicios de autenticación se realizan mediante **HTTPS con TLS 1.2 o superior**.
+- **Sin almacenamiento en servidores propios:** SiTechNi no opera servidores de base de datos. Los datos del álbum residen exclusivamente en la infraestructura de Google (cuenta del usuario).
+- **Tokens en memoria:** El token de acceso OAuth se mantiene únicamente en memoria volátil del dispositivo y se descarta al cerrar sesión o al cerrar la aplicación.
+- **Nonce criptográfico:** La autenticación con Apple utiliza un nonce generado con `Crypto.getRandomBytesAsync` (32 bytes aleatorios + SHA-256), cumpliendo con los estándares de seguridad de Apple Sign-In.
+- **Sin logs de tokens:** La aplicación no registra tokens, credenciales ni datos personales en logs de consola en entorno de producción.
+
+> La seguridad de los datos almacenados en Google Sheets depende también de las medidas que el **propio usuario** aplique en su cuenta de Google (contraseña robusta, verificación en dos pasos). SiTechNi no puede garantizar la protección de datos ante compromisos de la cuenta de Google del usuario.
+
+---
+
+## 6. Retención de datos
+
+| Dato | Período de retención | Eliminación |
+|---|---|---|
+| Token OAuth en memoria | Duración de la sesión activa | Al cerrar sesión o la app |
+| Nombre y email en sesión | Duración de la sesión activa | Al cerrar sesión o la app |
+| Datos del álbum (Google Sheets) | Indefinido (bajo control del usuario) | El usuario los elimina desde Google Drive |
+| Datos en servidores de SiTechNi | No aplica — SiTechNi no almacena datos | — |
+
+---
+
+## 7. Eliminación de cuenta y datos
+
+Dado que esta aplicación utiliza autenticación de terceros (Google / Apple), **no existe una "cuenta SiTechNi"** separada. Para eliminar completamente su acceso y datos, el usuario debe seguir estos pasos:
+
+### Desde la aplicación
+1. Ir a **Perfil → Cerrar sesión**. Esto revoca el token OAuth y elimina los datos de sesión del dispositivo.
+
+### Desde la web (eliminación completa)
+Para una eliminación total de datos asociados:
+
+1. **Revocar el acceso de la app a Google:** Visita [myaccount.google.com/permissions](https://myaccount.google.com/permissions), busca "Álbum Panini FWC 2026" y retira el acceso.
+2. **Eliminar los datos del álbum:** Accede a [drive.google.com](https://drive.google.com), localiza la hoja de cálculo creada por la app y elimínala.
+3. **Solicitud formal de eliminación:** Envía un correo a [soporte@sitechni.com](mailto:soporte@sitechni.com) con el asunto **"Eliminación de datos — Álbum Panini FWC 2026"** si requieres confirmación escrita. Responderemos en un plazo máximo de **30 días hábiles**.
+
+---
+
+## 8. Limitación de responsabilidad
 
 SiTechNi no se hace responsable por:
 
@@ -67,51 +118,58 @@ SiTechNi no se hace responsable por:
 - Pérdida, alteración o eliminación de datos almacenados en Google Sheets u otros servicios de terceros.
 - Daños directos, indirectos, incidentales o consecuentes derivados del uso o de la imposibilidad de uso de la aplicación.
 - Interrupciones en el servicio causadas por factores externos (conectividad, servidores de terceros, actualizaciones del sistema operativo, etc.).
-- Accesos no autorizados a la cuenta de Google del usuario resultantes de negligencia del propio usuario (contraseñas débiles, dispositivos sin bloqueo de pantalla, etc.).
+- Accesos no autorizados a la cuenta de Google del usuario resultantes de negligencia del propio usuario (contraseñas débiles, dispositivos sin bloqueo de pantalla, sesiones compartidas, etc.).
 
 El uso de esta aplicación se realiza **bajo el propio riesgo del usuario**.
 
 ---
 
-## 7. Servicios de terceros
+## 9. Servicios de terceros
 
-Esta aplicación se integra con los siguientes servicios externos, cada uno con sus propias políticas de privacidad:
+Esta aplicación se integra con los siguientes servicios externos. Cada uno opera bajo su propia política de privacidad y puede recopilar datos adicionales de acuerdo con sus propios términos:
 
-| Servicio | Finalidad | Política |
-|---|---|---|
-| Google Sign-In | Autenticación | [policies.google.com/privacy](https://policies.google.com/privacy) |
-| Google Sheets API | Almacenamiento del álbum | [policies.google.com/privacy](https://policies.google.com/privacy) |
-| Sign in with Apple | Autenticación (iOS) | [apple.com/legal/privacy](https://www.apple.com/legal/privacy/) |
-| Expo / EAS | Distribución de la app | [expo.dev/privacy](https://expo.dev/privacy) |
+| Servicio | Proveedor | Datos que pueden recibir | Política |
+|---|---|---|---|
+| Google Sign-In | Google LLC | Email, nombre, foto de perfil | [policies.google.com/privacy](https://policies.google.com/privacy) |
+| Google Sheets API | Google LLC | Contenido de la hoja del álbum | [policies.google.com/privacy](https://policies.google.com/privacy) |
+| Sign in with Apple | Apple Inc. | Email anonimizado, nombre | [apple.com/legal/privacy](https://www.apple.com/legal/privacy/) |
+| Expo / EAS | Expo (650 Industries) | Puede recopilar datos de crash y uso anónimos | [expo.dev/privacy](https://expo.dev/privacy) |
 
-SiTechNi no controla las prácticas de privacidad de estos terceros y recomienda al usuario revisar sus políticas individuales.
-
----
-
-## 8. Derechos del usuario
-
-El usuario tiene derecho a:
-
-- **Acceder** a los datos de su álbum en cualquier momento desde su cuenta de Google Sheets.
-- **Eliminar** sus datos borrando la hoja de cálculo asociada directamente desde Google Drive.
-- **Revocar** el acceso de la aplicación a su cuenta de Google desde [myaccount.google.com/permissions](https://myaccount.google.com/permissions).
-- **Eliminar** la aplicación del dispositivo en cualquier momento.
+SiTechNi no controla las prácticas de privacidad de estos terceros. Se recomienda al usuario revisar sus políticas individuales.
 
 ---
 
-## 9. Cambios en esta política
+## 10. Derechos del usuario
 
-SiTechNi se reserva el derecho de actualizar esta Política de Privacidad en cualquier momento. Los cambios se publicarán en esta misma página con la fecha de actualización correspondiente. El uso continuado de la aplicación después de publicados los cambios implica la aceptación de la nueva versión.
+De acuerdo con las normativas aplicables (RGPD, CCPA, COPPA y leyes locales), el usuario tiene derecho a:
+
+- **Acceder** a sus datos del álbum en cualquier momento desde Google Sheets.
+- **Rectificar** sus datos modificando directamente la hoja de cálculo.
+- **Eliminar** sus datos siguiendo el procedimiento descrito en la sección 7.
+- **Portabilidad:** Exportar su hoja de cálculo desde Google Drive en los formatos disponibles (.xlsx, .csv, etc.).
+- **Revocar el consentimiento** retirando los permisos OAuth en [myaccount.google.com/permissions](https://myaccount.google.com/permissions).
+- **Presentar una reclamación** ante la autoridad de protección de datos de su país si considera que sus derechos han sido vulnerados.
+
+Para ejercer cualquiera de estos derechos, escríbenos a [soporte@sitechni.com](mailto:soporte@sitechni.com).
 
 ---
 
-## 10. Contacto
+## 11. Cambios en esta política
 
-Para consultas relacionadas con esta Política de Privacidad, puedes escribirnos a:
+SiTechNi se reserva el derecho de actualizar esta Política de Privacidad en cualquier momento. Los cambios materiales se notificarán al usuario mediante un aviso en la aplicación en el siguiente inicio de sesión posterior a la actualización. La fecha de "Última actualización" al inicio de este documento se actualizará en cada revisión.
+
+---
+
+## 12. Contacto
+
+Para consultas, solicitudes de eliminación de datos o ejercicio de derechos relacionados con esta Política de Privacidad:
 
 **SiTechNi**  
-Correo electrónico: [soporte@sitechni.com](mailto:soporte@sitechni.com)
+Correo electrónico: [soporte@sitechni.com](mailto:soporte@sitechni.com)  
+Solicitud de eliminación de cuenta: [soporte@sitechni.com](mailto:soporte@sitechni.com) — Asunto: "Eliminación de datos — Álbum Panini FWC 2026"
+
+Tiempo de respuesta máximo: **30 días hábiles**.
 
 ---
 
-*Esta política de privacidad fue redactada para cumplir con los requisitos de Google Play Store, Apple App Store, el Reglamento General de Protección de Datos (RGPD) y la Children's Online Privacy Protection Act (COPPA).*
+*Esta política de privacidad fue redactada para cumplir con los lineamientos de Google Play Store, Apple App Store, el Reglamento General de Protección de Datos (RGPD/GDPR), la California Consumer Privacy Act (CCPA) y la Children's Online Privacy Protection Act (COPPA).*
