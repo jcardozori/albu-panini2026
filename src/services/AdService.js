@@ -1,14 +1,13 @@
 // src/services/AdService.js
 // Gestión centralizada de AdMob: inicialización, IDs y intersticial.
 //
-// IDs de PRODUCCIÓN → crear en console.admob.google.com > Aplicaciones > Unidades de anuncio
-// IDs de PRUEBA      → los de Google, sólo para desarrollo local o emulador.
+// Los IDs de producción se inyectan en tiempo de build desde EAS env vars:
+//   ADMOB_BANNER_ANDROID       → app.config.js → Constants.expoConfig.extra.admobBannerAndroid
+//   ADMOB_INTERSTITIAL_ANDROID → app.config.js → Constants.expoConfig.extra.admobInterstitialAndroid
 //
-// Cómo agregar los IDs reales:
-//   1. Crea una unidad de anuncio tipo "Banner" y otra tipo "Intersticial" en AdMob.
-//   2. Sustituye las constantes PROD_* de abajo con los IDs obtenidos.
-//   3. Agrega ADMOB_APP_ID_ANDROID a los secrets de EAS (igual que GOOGLE_SERVICES_JSON).
+// En desarrollo (__DEV__ === true) se usan los IDs de prueba oficiales de Google.
 
+import Constants from 'expo-constants';
 import {
   InterstitialAd,
   AdEventType,
@@ -20,15 +19,16 @@ import {
 const TEST_BANNER_ID        = TestIds.ADAPTIVE_BANNER;
 const TEST_INTERSTITIAL_ID  = TestIds.INTERSTITIAL;
 
-// ─── IDs de producción ───────────────────────────────────────────────────────
-const PROD_BANNER_ID        = 'ca-app-pub-3711561005297489/4720625623';
-const PROD_INTERSTITIAL_ID  = 'ca-app-pub-3711561005297489/8524139262';
+// ─── IDs de producción (inyectados por EAS en build time) ────────────────────
+const extra = Constants.expoConfig?.extra ?? {};
+const PROD_BANNER_ID        = extra.admobBannerAndroid;
+const PROD_INTERSTITIAL_ID  = extra.admobInterstitialAndroid;
 
 // ─── Selección automática según entorno ──────────────────────────────────────
 const IS_PROD = !__DEV__;
 
-export const BANNER_AD_UNIT_ID       = IS_PROD ? PROD_BANNER_ID       : TEST_BANNER_ID;
-export const INTERSTITIAL_AD_UNIT_ID = IS_PROD ? PROD_INTERSTITIAL_ID : TEST_INTERSTITIAL_ID;
+export const BANNER_AD_UNIT_ID       = (IS_PROD && PROD_BANNER_ID)       ? PROD_BANNER_ID       : TEST_BANNER_ID;
+export const INTERSTITIAL_AD_UNIT_ID = (IS_PROD && PROD_INTERSTITIAL_ID) ? PROD_INTERSTITIAL_ID : TEST_INTERSTITIAL_ID;
 
 // ─── Inicialización (llamar una sola vez al arrancar la app) ─────────────────
 let _initialized = false;
