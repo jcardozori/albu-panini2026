@@ -57,14 +57,23 @@ export function AuthProvider({ children }) {
       setAccessToken(tokens.accessToken);
       return { success: true };
     } catch (error) {
+      // Log diagnóstico — ayuda a identificar el código de error exacto
+      console.warn('[GoogleSignIn] error.code:', error?.code);
+      console.warn('[GoogleSignIn] error.message:', error?.message);
+
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         return { success: false, error: 'Inicio de sesión cancelado' };
       } else if (error.code === statusCodes.IN_PROGRESS) {
         return { success: false, error: 'Inicio de sesión en progreso' };
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         return { success: false, error: 'Google Play Services no disponible' };
+      } else if (error.code === '10') {
+        // DEVELOPER_ERROR: SHA-1 no registrada o webClientId incorrecto
+        return { success: false, error: 'Error de configuración (código 10). Verifica SHA-1 y webClientId.' };
+      } else if (error.code === '12501') {
+        return { success: false, error: 'Inicio de sesión cancelado por el usuario' };
       }
-      return { success: false, error: 'Error al iniciar sesión con Google' };
+      return { success: false, error: `Error al iniciar sesión con Google (${error?.code ?? 'desconocido'})` };
     }
   };
 
