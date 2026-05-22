@@ -63,11 +63,11 @@ function resolveGoogleError(error) {
 }
 
 // ─── Configuración Google Sign-In ─────────────────────────────────────────────
-const WEB_CLIENT_ID = Constants.expoConfig?.extra?.googleWebClientId;
+const WEB_CLIENT_ID = Constants.expoConfig?.extra?.googleWebClientId ?? '';
 
-trace('INIT', 'webClientId cargado', WEB_CLIENT_ID ? WEB_CLIENT_ID.slice(0, 20) + '...' : 'NO CONFIGURADO');
+trace('INIT', 'webClientId cargado desde Constants', WEB_CLIENT_ID ? WEB_CLIENT_ID.slice(0, 20) + '...' : '(vacío)');
 
-if (!WEB_CLIENT_ID || WEB_CLIENT_ID.includes('TU_WEB_CLIENT_ID')) {
+if (!WEB_CLIENT_ID) {
   console.warn(`${TAG}[INIT] ADVERTENCIA: googleWebClientId no configurado en app.json > extra`);
 }
 
