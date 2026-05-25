@@ -58,6 +58,8 @@ export default function HomeScreen({ navigation }) {
       console.error('[Home] Error cargando datos locales:', e);
     } finally {
       setLoading(false);
+      // Mostrar intersticial al entrar a la app
+      showInterstitial();
     }
   };
 
