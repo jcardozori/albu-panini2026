@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  SafeAreaView,
   StatusBar,
   Alert,
   ActivityIndicator,
   Modal,
   Linking,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../services/AuthContext';
 import { SECTIONS, isSectionComplete } from '../data/stickers';
 import { loadLocalData, saveLocalData } from '../services/StorageService';
@@ -79,17 +79,27 @@ export default function HomeScreen({ navigation }) {
       if (result) {
         Alert.alert(
           'Exportación exitosa',
-          `El archivo fue guardado en tu Google Drive:\n\n📄 fichas\n📍 ${result.url}`,
+          `El archivo fue guardado en tu Google Drive:\n\n📄 fichas`,
           [
             { text: 'Cerrar' },
             { text: 'Abrir en Drive', onPress: () => Linking.openURL(result.url) },
           ]
         );
       } else {
-        Alert.alert('Error', 'No se pudo exportar. Inténtalo de nuevo.');
+        Alert.alert(
+          'Sin permisos de Drive',
+          'Para exportar a Google Sheets necesitas volver a iniciar sesión y aceptar los permisos de Google Drive.',
+          [
+            { text: 'Cancelar', style: 'cancel' },
+            {
+              text: 'Cerrar sesión ahora',
+              onPress: signOut,
+            },
+          ]
+        );
       }
     } catch (e) {
-      Alert.alert('Error', 'Error al exportar.');
+      Alert.alert('Error', 'No se pudo exportar. Verifica tu conexión e inténtalo de nuevo.');
     } finally {
       setExporting(false);
     }
