@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
   listContent: {
     padding: 16,
     gap: 8,
-    paddingBottom: 80, // espacio para el banner (~50px) + margen
+    paddingBottom: 120, // espacio para el banner + safe area + margen
   },
   sectionRow: {
     flexDirection: 'row',
