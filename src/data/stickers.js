@@ -3,10 +3,9 @@
 export const SECTIONS = [
   {
     id: 'fwc_1_8',
-    title: 'FWC 1-8',
-    totalStickers: 8,
-    startNumber: 1,
-    endNumber: 8,
+    title: 'FWC 00-8',
+    totalStickers: 9,
+    labels: ['00', '1', '2', '3', '4', '5', '6', '7', '8'],
   },
   {
     id: 'grupo_a_mexico',
@@ -282,6 +281,9 @@ export function isSectionComplete(stickerStates) {
 
 // Retorna la etiqueta de una ficha dentro de una sección
 export function getStickerLabel(section, index) {
+  if (section.labels) {
+    return section.labels[index] ?? `${index}`;
+  }
   if (section.prefix) {
     return `${section.prefix}${section.startNumber + index}`;
   }
