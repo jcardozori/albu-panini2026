@@ -15,12 +15,8 @@ import {
 } from 'react-native';
 import { useAuth } from '../services/AuthContext';
 import { SECTIONS, isSectionComplete } from '../data/stickers';
-import {
-  getOrCreateSpreadsheet,
-  loadDataFromSheets,
-  saveDataToSheets,
-  exportToCustomSheet,
-} from '../services/googleSheetsService';
+import { loadLocalData, saveLocalData } from '../services/StorageService';
+import { exportToCustomSheet } from '../services/googleSheetsService';
 import AdBanner from '../components/AdBanner';
 import { showInterstitial } from '../services/AdService';
 
@@ -30,7 +26,6 @@ const INTERSTITIAL_EVERY = 3;
 export default function HomeScreen({ navigation }) {
   const { user, accessToken, signOut, refreshToken } = useAuth();
   const [allStates, setAllStates] = useState({});
-  const [spreadsheetId, setSpreadsheetId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -45,14 +40,11 @@ export default function HomeScreen({ navigation }) {
   const initializeData = async () => {
     setLoading(true);
     try {
-      const sheetId = await getOrCreateSpreadsheet(accessToken, refreshToken);
-      setSpreadsheetId(sheetId);
-      const data = await loadDataFromSheets(sheetId, accessToken, refreshToken);
-
+      const data = await loadLocalData();
       if (data) {
         setAllStates(data);
       } else {
-        // Estado inicial vacío para todas las secciones
+        // Primera vez — estado vacío para todas las secciones
         const initial = {};
         SECTIONS.forEach(section => {
           initial[section.id] = {};
@@ -63,7 +55,7 @@ export default function HomeScreen({ navigation }) {
         setAllStates(initial);
       }
     } catch (e) {
-      Alert.alert('Error', 'No se pudo conectar con Google Sheets. Verifica tu conexión.');
+      console.error('[Home] Error cargando datos locales:', e);
     } finally {
       setLoading(false);
     }
@@ -73,13 +65,11 @@ export default function HomeScreen({ navigation }) {
   const handleReturnFromSection = useCallback((sectionId, newStickerState) => {
     setAllStates(prev => {
       const updated = { ...prev, [sectionId]: newStickerState };
-      // Auto-guardar en background
-      if (spreadsheetId) {
-        saveDataToSheets(spreadsheetId, accessToken, updated, SECTIONS, refreshToken).catch(console.error);
-      }
+      // Auto-guardar localmente en background
+      saveLocalData(updated).catch(console.error);
       return updated;
     });
-  }, [spreadsheetId, accessToken]);
+  }, []);
 
   const handleExport = async () => {
     setMenuVisible(false);

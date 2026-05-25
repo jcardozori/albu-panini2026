@@ -74,6 +74,10 @@ if (!WEB_CLIENT_ID) {
 GoogleSignin.configure({
   webClientId: WEB_CLIENT_ID,
   offlineAccess: true,
+  scopes: [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive.file',
+  ],
 });
 
 trace('INIT', 'GoogleSignin.configure() completado');
