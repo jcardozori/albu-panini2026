@@ -1,0 +1,63 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# CI — Integración Continua
+# Ejecuta las pruebas unitarias automáticamente en cada push y Pull Request.
+# Si algún test falla, el PR queda bloqueado y no puede mergearse.
+#
+# Triggers:
+#   - Push a cualquier rama (excepto main y develop — esas las maneja cd.yml)
+#   - Pull Request apuntando a main o develop
+#
+# Proyecto: Laminas WC2026
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: CI — Tests
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    name: Pruebas unitarias (Jest)
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clonar el repositorio
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      # 2. Configurar Node.js 20 (LTS compatible con Expo SDK 54)
+      - name: Configurar Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Instalar dependencias (legacy-peer-deps por conflicto de versiones React 19)
+      - name: Instalar dependencias
+        run: npm install --legacy-peer-deps
+
+      # 4. Ejecutar pruebas unitarias
+      - name: Ejecutar pruebas Jest
+        run: npm test -- --ci --forceExit --passWithNoTests
+
+      # 5. Subir reporte de cobertura como artefacto (opcional)
+      - name: Generar reporte de cobertura
+        if: success()
+        run: npm run test:coverage -- --ci --forceExit --passWithNoTests
+        continue-on-error: true
+
+      - name: Subir reporte de cobertura
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 7
+        continue-on-error: true
